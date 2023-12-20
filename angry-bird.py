@@ -4,7 +4,7 @@ from utils.command_handler import handle_command
 from utils.logger import *
 from utils.credential_loader import *
 import discord
-
+from firebase.firebase_credential import init_credential
 from utils.message_parser import parse_message
 
 intents = discord.Intents.default()
@@ -29,5 +29,7 @@ async def on_message(message):
         await message.channel.send(embed=embedVar)
 
 if __name__ == "__main__":
+
     TOKEN,GUILD_ID = load_credential()
+    init_credential()
     client.run(TOKEN)
