@@ -3,7 +3,7 @@ Description=Description of your script
 After=network.target
 
 [Service]
-ExecStart=./start.sh
+ExecStart=/home/duythanh/projects/bots/angry-bird/start.sh
 User=duythanh
 Group=root
 Type=simple
