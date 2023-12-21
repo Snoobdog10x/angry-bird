@@ -1,3 +1,5 @@
+import traceback
+
 from utils import *
 from utils.credential_loader import *
 from utils.command_handler import *
@@ -19,6 +21,7 @@ async def on_ready():
 @client.event
 async def on_message(message: discord.Message):
     if message.content.startswith("/ab"):
+
         message_content = message.content
         parsed_args = parse_message(message_content)
         log_message(f"{message.author.display_name} send a command {parsed_args}")
@@ -32,5 +35,8 @@ async def on_message(message: discord.Message):
 
 
 if __name__ == "__main__":
-    TOKEN, GUILD_ID = load_credential()
-    client.run(TOKEN)
+    try:
+        TOKEN, GUILD_ID = load_credential()
+        client.run(TOKEN)
+    except Exception:
+        log_message(traceback.format_exc(), LogLevel.ERROR)
