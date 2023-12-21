@@ -1,4 +1,9 @@
+import io
+
 import discord
+
+from firebase.firebase_handler import FirebaseHandler
+from utils.view import ButtonView
 
 help_data = [
     ("Angry Bird Command:", "", False),
@@ -6,6 +11,7 @@ help_data = [
     ("/ab cookie", "Request a new cookie [In Progress]", False),
     ("/ab music <music name>", "Playing a music [Pending, cause of big blocker]", False),
 ]
+firebase_instance = FirebaseHandler()
 
 
 def _build_embed(field=[], title: str = "", description: str = "", color=0x00ff00):
@@ -36,9 +42,12 @@ async def error_command(command_args: [], message: discord.Message):
 
 
 async def cookie_command(message: discord.Message):
+    cookie_json = firebase_instance.get_latest_cookie_json()
+    f = io.StringIO(cookie_json)
     embed = _build_embed(
         title="Cho mày cookie nè",
         description="Nhớ cảm ơn tao nha"
     )
 
-    await message.channel.send(embed=embed)
+    await message.channel.send(embed=embed, file=discord.File(f, filename="cookie.json"),
+                               view=ButtonView(firebase_instance=firebase_instance))

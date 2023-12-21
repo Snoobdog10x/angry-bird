@@ -1,5 +1,4 @@
-# bot.py
-from utils.logger import *
+from utils import *
 from utils.credential_loader import *
 from utils.command_handler import *
 import discord
@@ -19,7 +18,6 @@ async def on_ready():
 
 @client.event
 async def on_message(message: discord.Message):
-    print(message.guild.id)
     if message.content.startswith("/ab"):
         message_content = message.content
         parsed_args = parse_message(message_content)
@@ -35,4 +33,5 @@ async def on_message(message: discord.Message):
 
 if __name__ == "__main__":
     TOKEN, GUILD_ID = load_credential()
+
     client.run(TOKEN)
