@@ -1,5 +1,6 @@
 from enum import Enum
 from datetime import datetime, timezone
+import logging
 
 
 class LogLevel(Enum):
@@ -8,5 +9,22 @@ class LogLevel(Enum):
     INFO = 2
 
 
+logging.basicConfig(level=logging.INFO)
+
+
+def _build_message(message: str):
+    return f" [{datetime.now()}] {message}"
+
+
 def log_message(message: str, logLevel: LogLevel = LogLevel.INFO):
-    print(f"[{logLevel.name}] [{datetime.now()}]: {message}")
+    if logLevel == LogLevel.INFO:
+        logging.info(_build_message(message))
+        return
+
+    if logLevel == LogLevel.WARNING:
+        logging.warning(_build_message(message))
+        return
+
+    if logLevel == LogLevel.ERROR:
+        logging.error(_build_message(message))
+        return
