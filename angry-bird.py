@@ -30,7 +30,7 @@ async def on_message(message: discord.Message):
         if "help" in parsed_args:
             await help_command(message)
             return
-        await error_command(message)
+        await error_command(parsed_args, message)
 
 
 if __name__ == "__main__":
