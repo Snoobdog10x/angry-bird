@@ -1,4 +1,5 @@
 from enum import Enum
+from datetime import datetime, timezone
 
 
 class LogLevel(Enum):
@@ -8,4 +9,4 @@ class LogLevel(Enum):
 
 
 def log_message(message: str, logLevel: LogLevel = LogLevel.INFO):
-    print(f"[{logLevel.name}]: {message}")
+    print(f"[{logLevel.name}] [{datetime.now()}]: {message}")
