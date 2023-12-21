@@ -34,7 +34,7 @@ class FirebaseHandler(object):
         if self.watched_snapshot is not None:
             return
 
-        self.watched_snapshot = db.collection(COOKIE_COLLECTION).where("is_alive", "==", True).on_snapshot(
+        self.watched_snapshot = db.collection(COOKIE_COLLECTION).where("is_alive", "==", True).limit(1).on_snapshot(
             self._on_snapshot
         )
 
