@@ -1,10 +1,8 @@
 # bot.py
-import os
-from utils.command_handler import handle_command
 from utils.logger import *
 from utils.credential_loader import *
+from utils.command_handler import *
 import discord
-from firebase.firebase_credential import init_credential
 from utils.message_parser import parse_message
 
 intents = discord.Intents.default()
@@ -20,16 +18,21 @@ async def on_ready():
 
 
 @client.event
-async def on_message(message):
+async def on_message(message: discord.Message):
+    print(message.guild.id)
     if message.content.startswith("/ab"):
         message_content = message.content
         parsed_args = parse_message(message_content)
         log_message(f"{message.author.display_name} send a command {parsed_args}")
-        embedVar = handle_command(parsed_args)
-        await message.channel.send(embed=embedVar)
+        if "cookie" in parsed_args:
+            await cookie_command(message)
+            return
+        if "help" in parsed_args:
+            await help_command(message)
+            return
+        await error_command(message)
+
 
 if __name__ == "__main__":
-
-    TOKEN,GUILD_ID = load_credential()
-    init_credential()
+    TOKEN, GUILD_ID = load_credential()
     client.run(TOKEN)
