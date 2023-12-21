@@ -33,5 +33,4 @@ async def on_message(message: discord.Message):
 
 if __name__ == "__main__":
     TOKEN, GUILD_ID = load_credential()
-
     client.run(TOKEN)
