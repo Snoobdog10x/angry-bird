@@ -1,0 +1,12 @@
+[Unit]
+Description=Description of your script
+After=network.target
+
+[Service]
+ExecStart=./start.sh
+User=duythanh
+Group=root
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
