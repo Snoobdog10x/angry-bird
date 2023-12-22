@@ -1,16 +1,17 @@
 import io
-
-import discord
-
 from firebase.firebase_handler import FirebaseHandler
 from utils.view import ButtonView
+from open_ai import *
+import asyncio
 
 help_data = [
     ("Angry Bird Command:", "", False),
     ("/ab help", "Show all AB command", False),
-    ("/ab cookie", "Request a new cookie [In Progress]", False),
+    ("/ab cookie", "Request a new cookie", False),
+    ("/ab gpt <message>", "Ask AB sth", False),
     ("/ab music <music name>", "Playing a music [Pending, cause of big blocker]", False),
 ]
+
 firebase_instance = FirebaseHandler()
 
 
@@ -51,3 +52,13 @@ async def cookie_command(message: discord.Message):
 
     await message.channel.send(embed=embed, file=discord.File(f, filename="cookie.json"),
                                view=ButtonView(firebase_instance=firebase_instance))
+
+
+async def ask_command(command_args: [], message: discord.Message):
+    if len(command_args) == 2:
+        await message.channel.send("Làm ơn điền thêm câu hỏi vào giúp tao")
+
+    user = message.author
+    loading_message = await message.channel.send("Đang si nghĩ, đợi tao tí...")
+    response = await ask_gpt(command_args[-1], user)
+    await loading_message.edit(content=response)

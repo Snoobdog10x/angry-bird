@@ -1,2 +1,2 @@
 pip install -U discord-py-interactions
-pip install
+pip install gpt4-openai-api

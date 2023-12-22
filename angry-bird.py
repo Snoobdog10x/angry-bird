@@ -21,7 +21,6 @@ async def on_ready():
 @client.event
 async def on_message(message: discord.Message):
     if message.content.startswith("/ab"):
-
         message_content = message.content
         parsed_args = parse_message(message_content)
         log_message(f"{message.author.display_name} send a command {parsed_args}")
@@ -30,6 +29,9 @@ async def on_message(message: discord.Message):
             return
         if "help" in parsed_args:
             await help_command(message)
+            return
+        if "gpt" in parsed_args:
+            await ask_command(parsed_args, message)
             return
         await error_command(parsed_args, message)
 
