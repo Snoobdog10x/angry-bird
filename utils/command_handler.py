@@ -61,4 +61,8 @@ async def ask_command(command_args: [], message: discord.Message):
     user = message.author
     loading_message = await message.channel.send("Đang si nghĩ, đợi tao tí...")
     response = await ask_gpt(command_args[-1], user)
-    await loading_message.edit(content=response)
+    if len(response) != 0:
+        await loading_message.edit(content=response)
+        return
+
+    await loading_message.edit(content="Lỗi rồi")

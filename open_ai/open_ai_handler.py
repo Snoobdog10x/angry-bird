@@ -39,6 +39,6 @@ async def ask_gpt(message: str, user: discord.User):
     response = await g4f.ChatCompletion.create_async(
         model=g4f.models.gpt_4,
         messages=message_asked_instance.get_messages(user),
-        provider=g4f.Provider.ChatgptAi,
+        provider=g4f.Provider.Bing,
     )
     return response
