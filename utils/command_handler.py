@@ -43,15 +43,16 @@ async def error_command(command_args: [], message: discord.Message):
 
 
 async def cookie_command(message: discord.Message):
+    cookie = firebase_instance.get_latest_cookie()
     cookie_json = firebase_instance.get_latest_cookie_json()
-    f = io.StringIO(cookie_json)
+    file = io.StringIO(cookie_json)
     embed = _build_embed(
         title="Cho mày cookie nè",
         description="Nhớ cảm ơn tao nha"
     )
 
-    await message.channel.send(embed=embed, file=discord.File(f, filename="cookie.json"),
-                               view=ButtonView(firebase_instance=firebase_instance))
+    await message.channel.send(embed=embed, file=discord.File(file, filename="cookie.json"),
+                               view=ButtonView(firebase_instance=firebase_instance, doc=cookie))
 
 
 async def ask_command(command_args: [], message: discord.Message):

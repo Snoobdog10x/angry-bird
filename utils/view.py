@@ -4,7 +4,8 @@ import discord
 
 
 class ButtonView(discord.ui.View):
-    def __init__(self, firebase_instance):
+    def __init__(self, firebase_instance, doc):
+        self.doc = doc
         self.firebase_instance = firebase_instance
         super().__init__()
 
@@ -34,8 +35,8 @@ class ButtonView(discord.ui.View):
         user = interact.user
         await asyncio.gather(
             self._disable_children(interact),
-            self.firebase_instance.mark_cookie_alive(user),
-            self.firebase_instance.mark_cookie_picked(user),
+            self.firebase_instance.mark_cookie_alive(user, self.doc),
+            self.firebase_instance.mark_cookie_picked(user, self.doc),
             self._update_after_mark_message(interact, True)
         )
 
@@ -44,7 +45,7 @@ class ButtonView(discord.ui.View):
         user = interact.user
         await asyncio.gather(
             self._disable_children(interact),
-            self.firebase_instance.mark_cookie_dead(user),
-            self.firebase_instance.mark_cookie_picked(user),
+            self.firebase_instance.mark_cookie_dead(user, self.doc),
+            self.firebase_instance.mark_cookie_picked(user, self.doc),
             self._update_after_mark_message(interact, False)
         )

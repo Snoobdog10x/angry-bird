@@ -54,25 +54,31 @@ class FirebaseHandler(metaclass=Singleton):
 
         return json.dumps(cookie.to_dict()["cookies"], indent=2)
 
-    async def mark_cookie_dead(self, user: discord.User):
+    async def mark_cookie_dead(self, user: discord.User, doc):
+        if doc is None:
+            return
         log_message(f"{user.id} {user.display_name} marked cookie dead")
-        await async_db.collection(COOKIE_COLLECTION).document(self.latest_cookie.id).update(
+        await async_db.collection(COOKIE_COLLECTION).document(doc.id).update(
             {
                 'is_alive': False
             }
         )
 
-    async def mark_cookie_alive(self, user: discord.User):
+    async def mark_cookie_alive(self, user: discord.User, doc):
+        if doc is None:
+            return
         log_message(f"{user.id} {user.display_name} marked cookie alive")
-        await async_db.collection(COOKIE_COLLECTION).document(self.latest_cookie.id).update(
+        await async_db.collection(COOKIE_COLLECTION).document(doc.id).update(
             {
                 'is_alive': True
             }
         )
 
-    async def mark_cookie_picked(self, user: discord.User):
+    async def mark_cookie_picked(self, user: discord.User, doc):
+        if doc is None:
+            return
         log_message(f"{user.id} {user.display_name} marked cookie picked")
-        await async_db.collection(COOKIE_COLLECTION).document(self.latest_cookie.id).update(
+        await async_db.collection(COOKIE_COLLECTION).document(doc.id).update(
             {
                 'picked_days': firestore.ArrayUnion([datetime.now(timezone.utc)])
             }
