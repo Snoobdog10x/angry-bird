@@ -2,6 +2,7 @@ import json
 import os
 import firebase_admin
 import discord
+from shared.singleton import *
 from utils import *
 from firebase_admin import firestore
 from firebase_admin import credentials
@@ -13,16 +14,11 @@ db = firestore.client()
 async_db = firestore.firestore.AsyncClient()
 
 
-class FirebaseHandler(object):
+class FirebaseHandler(metaclass=Singleton):
     def __init__(self):
         self.latest_cookie = None
         self.watched_snapshot = None
         self.listen_snapshot()
-
-    def __new__(cls):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(FirebaseHandler, cls).__new__(cls)
-        return cls.instance
 
     def _on_snapshot(self, doc_snapshot, changes, read_time):
         for doc in doc_snapshot:
@@ -33,9 +29,12 @@ class FirebaseHandler(object):
         if self.watched_snapshot is not None:
             return
 
-        self.watched_snapshot = db.collection(COOKIE_COLLECTION).where("is_alive", "==", True).limit(1).on_snapshot(
-            self._on_snapshot
-        )
+        self.watched_snapshot = db \
+            .collection(COOKIE_COLLECTION) \
+            .where("is_alive", "==", True) \
+            .where("picked_days", "==", []) \
+            .limit(1) \
+            .on_snapshot(self._on_snapshot)
 
     def cancel_watch(self):
         if self.watched_snapshot is None:
