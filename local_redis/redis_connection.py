@@ -4,7 +4,7 @@ import redis
 import os
 
 sep = os.sep
-f = open(f"..{sep}redis_credential.json")
+f = open(f".{sep}redis_credential.json")
 data = json.load(f)
 PASSWORD = data["PASSWORD"]
 IP = data["IP"]

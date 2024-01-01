@@ -1,2 +1,5 @@
-pip install -U discord-py-interactions
-pip install gpt4-openai-api
+pip install discord.py
+pip install asyncio
+pip install firebase-admin
+pip install g4f==0.1.9.3
+pip install redis
