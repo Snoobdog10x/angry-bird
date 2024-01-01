@@ -1,7 +1,6 @@
 import traceback
-
+from firebase import *
 from utils import *
-from utils.credential_loader import *
 from utils.command_handler import *
 import discord
 from utils.message_parser import parse_message
@@ -38,7 +37,7 @@ async def on_message(message: discord.Message):
 
 if __name__ == "__main__":
     try:
-        TOKEN, GUILD_ID = load_credential()
+        TOKEN, GUILD_ID = credential_instance.get_discord_credential()
         client.run(TOKEN)
     except Exception:
         log_message(traceback.format_exc(), LogLevel.ERROR)

@@ -1,12 +1,9 @@
-import json
-
 import redis
-import os
+from firebase import *
 
 sep = os.sep
-f = open(f".{sep}redis_credential.json")
-data = json.load(f)
-PASSWORD = data["PASSWORD"]
-IP = data["IP"]
-f.close()
+IP, PASSWORD = credential_instance.get_redis_credential()
 redis_instance = redis.Redis(host=IP, port=6379, decode_responses=True, password=PASSWORD)
+
+redis_instance.set("thanh", "hihi")
+print(redis_instance.get("thanh"))

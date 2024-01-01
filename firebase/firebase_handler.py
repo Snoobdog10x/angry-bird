@@ -1,15 +1,10 @@
 import json
-import os
-import firebase_admin
 import discord
 from shared.singleton import *
 from utils import *
 from firebase_admin import firestore
-from firebase_admin import credentials
+from firebase.init_firebase import  *
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = f"cookie-netflix-48899-firebase-adminsdk-6bxuo-c48d262735.json"
-cred = credentials.ApplicationDefault()
-firebase_admin.initialize_app(cred)
 db = firestore.client()
 async_db = firestore.firestore.AsyncClient()
 

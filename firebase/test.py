@@ -1,16 +1,9 @@
-from firebase_handler import FirebaseHandler
-
-import time
+import init_firebase
+from firebase.credential_loader import CredentialLoader
 
 
 def main():
-    instant = FirebaseHandler()
-    while True:
-        cookie = instant.get_latest_cookie()
-        if cookie is None:
-            continue
-        print(cookie.id)
-        time.sleep(2)
+    test = CredentialLoader()
 
 
 main()
