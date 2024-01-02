@@ -9,7 +9,7 @@ class LogLevel(Enum):
     INFO = 2
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.NOTSET)
 
 
 def _build_message(message: str):
