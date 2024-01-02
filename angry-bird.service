@@ -1,5 +1,5 @@
 [Unit]
-Description=Description of your script
+Description=angry-bird client
 After=network.target
 
 [Service]
