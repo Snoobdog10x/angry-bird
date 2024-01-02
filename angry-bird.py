@@ -32,6 +32,9 @@ async def on_message(message: discord.Message):
         if "gpt" in parsed_args:
             await ask_command(parsed_args, message)
             return
+        if "client" in parsed_args:
+            await client_command(message)
+            return
         await error_command(parsed_args, message)
 
 

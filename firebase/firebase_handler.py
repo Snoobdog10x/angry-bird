@@ -3,7 +3,7 @@ import discord
 from shared.singleton import *
 from utils import *
 from firebase_admin import firestore
-from firebase.init_firebase import  *
+from firebase.init_firebase import *
 
 db = firestore.client()
 async_db = firestore.firestore.AsyncClient()

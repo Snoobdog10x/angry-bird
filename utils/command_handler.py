@@ -1,14 +1,14 @@
 import io
-from firebase.firebase_handler import FirebaseHandler
 from utils.view import ButtonView
 from open_ai import *
-import asyncio
+from firebase.public_client import get_active_urls
 
 help_data = [
     ("Angry Bird Command:", "", False),
     ("/ab help", "Show all AB command", False),
     ("/ab cookie", "Request a new cookie", False),
     ("/ab gpt <message>", "Ask AB sth", False),
+    ("/ab client", "List current active client", False),
     ("/ab music <music name>", "Playing a music [Pending, cause of big blocker]", False),
 ]
 
@@ -58,6 +58,7 @@ async def cookie_command(message: discord.Message):
 async def ask_command(command_args: [], message: discord.Message):
     if len(command_args) == 2:
         await message.channel.send("Làm ơn điền thêm câu hỏi vào giúp tao")
+        return
 
     user = message.author
     loading_message = await message.channel.send("Đang si nghĩ, đợi tao tí...")
@@ -67,3 +68,23 @@ async def ask_command(command_args: [], message: discord.Message):
         return
 
     await loading_message.edit(content="Lỗi rồi")
+
+
+async def client_command(message: discord.Message):
+    url_map = get_active_urls()
+    embed_data = []
+    count = 0
+    for service, url in url_map.items():
+        is_in_line = True
+        if count == 0:
+            is_in_line = False
+        embed_data.append((f"{service}: ", url, is_in_line))
+        count+=1
+
+    embed = _build_embed(
+        embed_data,
+        title="Working clients",
+        description="All public clients currently work"
+    )
+
+    await message.channel.send(embed=embed)
