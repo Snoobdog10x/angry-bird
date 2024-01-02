@@ -1,5 +1,7 @@
 #!/bin/bash
 cd /home/duythanh/projects/bots/angry-bird
+git restore --staged .
+git restore .
 git pull
 python3 -m venv .venv
 source .venv/bin/activate

@@ -79,7 +79,7 @@ async def client_command(message: discord.Message):
         if count == 0:
             is_in_line = False
         embed_data.append((f"{service}: ", url, is_in_line))
-        count+=1
+        count += 1
 
     embed = _build_embed(
         embed_data,
