@@ -1,5 +1,6 @@
 #!/bin/bash
 cd /home/duythanh/projects/bots/angry-bird
+echo '[INFO] git update project'
 git restore --staged .
 git restore .
 git pull
