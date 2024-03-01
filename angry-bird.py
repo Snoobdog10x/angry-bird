@@ -19,10 +19,14 @@ async def on_ready():
 
 @client.event
 async def on_message(message: discord.Message):
+    if message.channel.id == 1212999388692090931:
+        return
+
     if message.content.startswith("/ab"):
         message_content = message.content
         parsed_args = parse_message(message_content)
         log_message(f"{message.author.display_name} send a command {parsed_args}")
+
         if "cookie" in parsed_args:
             await cookie_command(message)
             return
