@@ -3,3 +3,4 @@ discord_credential.json
 open_ai_credential.json
 .venv
 redis_credential.json
+test
